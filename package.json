@@ -1,0 +1,24 @@
+{
+  "name": "pg-success-queue",
+  "version": "1.0.0",
+  "description": "April 2018 DFW PostgreSQL User Group samples",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timgit/pg-success-queue.git"
+  },
+  "keywords": [],
+  "author": "me.timjones@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/timgit/pg-success-queue/issues"
+  },
+  "homepage": "https://github.com/timgit/pg-success-queue#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "cli-progress": "^1.8.0",
+    "pg-boss": "^2.4.4",
+    "yargs": "^11.0.0"
+  }
+}
