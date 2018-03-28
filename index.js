@@ -11,6 +11,7 @@ boss.start()
     .then(() => console.log(`boss is ready for business in ${bossConfig.database}`))
     .then(() => {
         boss.on('monitor-states', states => {
-            console.log(`${Date.now()} - Queue counts: Created: ${states.created.toLocaleString()}, Active: ${states.active.toLocaleString()}, Completed: ${states.complete.toLocaleString()}`);
+            let now = new Date();
+            console.log(`${now.toLocaleTimeString()} - Queue counts: Created: ${states.created.toLocaleString()}, Active: ${states.active.toLocaleString()}, Completed: ${states.complete.toLocaleString()}`);
         });
     });

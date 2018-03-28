@@ -30,7 +30,7 @@ function publish(){
 
     progress.start(count, 0);
 
-    return Promise.mapSeries(jobs, job => boss.publish(queue).then(() => progress.increment()))
+    return Promise.map(jobs, job => boss.publish(queue).then(() => progress.increment()), {concurrency:100})
         .then(() => progress.stop());
 
 }
