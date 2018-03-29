@@ -12,7 +12,7 @@ const boss = new PgBoss(bossConfig);
 
 boss.connect()
     .then(subscribe)
-    .then(() => console.log(`worker punched in @ ${Date.now()}`))
+    .then(() => console.log(`${(new Date()).toLocaleTimeString()}: worker punched in`))
     .catch(console.error);
 
     
@@ -21,10 +21,10 @@ function subscribe(){
 }
 
 function handler(job){
-    console.log(`Received job ${queue}:${job.id} at ${Date.now()}`);
+    console.log(`${(new Date()).toLocaleTimeString()}: Received job ${queue}:${job.id}`);
 
     Promise.delay(delay)
         .then(() => job.done())
-        .then(() => console.log(`Completed job ${queue}:${job.id} at ${Date.now()}`))
+        .then(() => console.log(`${(new Date()).toLocaleTimeString()}: Completed job ${queue}:${job.id}`))
         .catch(console.error);
 }

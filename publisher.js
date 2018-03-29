@@ -26,11 +26,14 @@ function publish(){
 
     const jobs = new Array(count).fill(null);
     
-    console.log(`Creating ${count} ${queue} jobs...`);
+    console.log(`${(new Date()).toLocaleTimeString()}: Creating ${count} ${queue} jobs...\n`);
 
     progress.start(count, 0);
 
     return Promise.map(jobs, job => boss.publish(queue).then(() => progress.increment()), {concurrency:100})
-        .then(() => progress.stop());
+        .then(() => {            
+            progress.stop();
+            console.log(`\n${(new Date()).toLocaleTimeString()}: Finished.`);
+        });
 
 }
