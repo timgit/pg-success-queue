@@ -5,6 +5,8 @@ let config = Object.assign({}, bossConfig, {monitorStateIntervalSeconds:2});
 
 const boss = new PgBoss(config);
 
+console.reset = () => process.stdout.write('\033c');
+
 boss.on('error', console.error);
 
 boss.start()
