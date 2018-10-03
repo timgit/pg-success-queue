@@ -10,21 +10,24 @@ delay = delay || 100;
 const bossConfig = require('./boss_config.json');
 const boss = new PgBoss(bossConfig);
 
-boss.connect()
-    .then(subscribe)
-    .then(() => console.log(`${(new Date()).toLocaleTimeString()}: worker punched in`))
-    .catch(console.error);
+return connect();
 
+async function connect() {
+    await boss.connect();
+    await subscribe();
     
-function subscribe(){
-    return boss.subscribe(queue, {teamSize: count}, handler);
+    console.log(`${(new Date()).toLocaleTimeString()}: worker punched in`);
 }
 
-function handler(job){
+    
+async function subscribe(){
+    return boss.subscribe(queue, {teamSize: count, teamConcurrency: 100}, handler);
+}
+
+async function handler(job){
     console.log(`${(new Date()).toLocaleTimeString()}: Received job ${queue}:${job.id}`);
 
-    Promise.delay(delay)
-        .then(() => job.done())
-        .then(() => console.log(`${(new Date()).toLocaleTimeString()}: Completed job ${queue}:${job.id}`))
-        .catch(console.error);
+    await Promise.delay(delay);
+
+    console.log(`${(new Date()).toLocaleTimeString()}: Completed job ${queue}:${job.id}`);
 }
