@@ -4,9 +4,9 @@ const argv = require('yargs').argv;
 const log = require('./logger');
 
 let {queue, count, delay} = argv;
-queue = queue || 'some-job';
+queue = queue || 'deferred-job';
 count = count || 1;
-delay = delay || 100;
+delay = delay || 10;
 
 const bossConfig = require('./boss_config.json');
 const boss = new PgBoss(bossConfig);
@@ -15,16 +15,13 @@ return connect();
 
 async function connect() {
     await boss.connect();
-    await subscribe();
+    await boss.subscribe(queue, handler);
     
-    log(`worker punched in for queue ${queue}`);
-}
-    
-async function subscribe(){
-    return boss.subscribe(queue, {teamSize: count, teamConcurrency: 100}, handler);
+    let jobId = await boss.publishAfter(queue, null, null, delay);
+
+    log(`published job for retrieval in ${delay} seconds: ${jobId}`);
 }
 
 async function handler(job){
-    log(`Received job ${job.name}: ${job.id}`);
-    await Promise.delay(delay);
+    log(`Received job in queue ${queue}: ${job.id}`);
 }

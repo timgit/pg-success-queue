@@ -1,5 +1,6 @@
 const PgBoss = require('pg-boss');
 const bossConfig = require('./boss_config.json');
+const log = require('./logger');
 
 return index();
 
@@ -15,10 +16,10 @@ async function index() {
     
     await boss.start();
     
-    console.log(`boss is ready for business in ${bossConfig.database}`);
+    log(`boss is ready for business in ${bossConfig.database}`);
 
     boss.on('monitor-states', states => {            
-        console.log(`${(new Date()).toLocaleTimeString()}: Queue counts: Created: ${states.created.toLocaleString()}, Active: ${states.active.toLocaleString()}, Completed: ${states.completed.toLocaleString()}`);
+        log(`Queue counts: Created: ${states.created.toLocaleString()}, Active: ${states.active.toLocaleString()}, Completed: ${states.completed.toLocaleString()}`);
     });
 
 }
