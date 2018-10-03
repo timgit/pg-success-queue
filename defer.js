@@ -4,7 +4,7 @@ const argv = require('yargs').argv;
 const log = require('./logger');
 
 let {queue, count, delay} = argv;
-queue = queue || 'deferred-job';
+queue = queue || 'defer';
 count = count || 1;
 delay = delay || 10;
 
